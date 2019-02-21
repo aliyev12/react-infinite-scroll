@@ -16,9 +16,10 @@ const app = express();
 app.get('/', (req, res) => res.send('Welcome'));
 
 app.get('/api/photos', (req, res) => {
-    unsplash.photos.listPhotos(1, 30)
+    unsplash.photos.listPhotos(req.query.start, req.query.count)
         .then(toJson)
-        .then(json => res.json(json));
+        .then(json => res.json(json))
+        .catch(err => console.log('Something went wrong: ', err));
 });
 
 const PORT = process.env.PORT || 5000;
